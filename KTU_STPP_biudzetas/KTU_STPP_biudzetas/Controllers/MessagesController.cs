@@ -32,7 +32,7 @@ namespace KTU_STPP_biudzetas.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Message>> GetMessage(int id)
         {
-            var message = await _context.Messages.FirstOrDefaultAsync(c => c.Id == id);
+            Message message = await _context.Messages.FirstOrDefaultAsync(c => c.Id == id);
 
             if (message == null)
             {

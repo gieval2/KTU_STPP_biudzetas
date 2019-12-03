@@ -13461,9 +13461,9 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\OneDrive - Kauno Technologijos Universitetas\\VII\\Saityno taikomųjų programų projektavimas\\Project\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas.csproj",
-      "projectName": "KTU_STPP_biudzetas",
-      "projectPath": "D:\\OneDrive - Kauno Technologijos Universitetas\\VII\\Saityno taikomųjų programų projektavimas\\Project\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas.csproj",
+      "projectUniqueName": "D:\\OneDrive - Kauno Technologijos Universitetas\\VII\\Saityno taikomųjų programų projektavimas\\Project\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTUSTPPBiudzetas.csproj",
+      "projectName": "KTUSTPPBiudzetas",
+      "projectPath": "D:\\OneDrive - Kauno Technologijos Universitetas\\VII\\Saityno taikomųjų programų projektavimas\\Project\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTUSTPPBiudzetas.csproj",
       "packagesPath": "C:\\Users\\Giedrius\\.nuget\\packages\\",
       "outputPath": "D:\\OneDrive - Kauno Technologijos Universitetas\\VII\\Saityno taikomųjų programų projektavimas\\Project\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\KTU_STPP_biudzetas\\obj\\",
       "projectStyle": "PackageReference",

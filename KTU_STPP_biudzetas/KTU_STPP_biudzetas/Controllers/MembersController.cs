@@ -86,7 +86,7 @@ namespace KTU_STPP_biudzetas.Controllers
         // DELETE: api/Members/5
         [Authorize(Policy = "RequireClaimFamilyHead")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Member>> Deleter(int id)
+        public async Task<ActionResult<Member>> Delete(int id)
         {
             var user = await _memberService.GetAsync(id);
             if (user == null)
