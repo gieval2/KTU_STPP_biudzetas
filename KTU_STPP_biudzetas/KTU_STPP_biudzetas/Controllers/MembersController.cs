@@ -1,5 +1,5 @@
-﻿using KTU_STPP_biudzetas.Models;
-using KTU_STPP_biudzetas.Services;
+﻿using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Controllers
+namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     [Route("api/Members")]

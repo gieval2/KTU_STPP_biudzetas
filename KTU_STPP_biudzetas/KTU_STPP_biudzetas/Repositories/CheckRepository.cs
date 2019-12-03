@@ -1,8 +1,8 @@
-﻿using KTU_STPP_biudzetas.Models;
+﻿using KTUSTPPBiudzetas.Models;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Repositories
+namespace KTUSTPPBiudzetas.Repositories
 {
     public class CheckRepository : Repository<Check>, ICheckRepository
     {

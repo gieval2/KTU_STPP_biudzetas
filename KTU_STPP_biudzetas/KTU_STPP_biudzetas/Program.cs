@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 
-namespace KTU_STPP_biudzetas
+namespace KTUSTPPBiudzetas
 {
     public class Program
     {

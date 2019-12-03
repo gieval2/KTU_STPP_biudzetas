@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace KTU_STPP_biudzetas.Migrations
+namespace KTUSTPPBiudzetas.Migrations
 {
     public partial class init : Migration
     {

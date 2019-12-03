@@ -4,20 +4,20 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
-using KTU_STPP_biudzetas.Models;
-using KTU_STPP_biudzetas.Helpers;
-using KTU_STPP_biudzetas.Services;
+using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Helpers;
+using KTUSTPPBiudzetas.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using System.Text;
 using Microsoft.AspNetCore.Identity;
-using KTU_STPP_biudzetas.Repositories;
+using KTUSTPPBiudzetas.Repositories;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Collections.Generic;
 using Swashbuckle.AspNetCore.Swagger;
 
-namespace KTU_STPP_biudzetas
+namespace KTUSTPPBiudzetas
 {
     public class Startup
     {

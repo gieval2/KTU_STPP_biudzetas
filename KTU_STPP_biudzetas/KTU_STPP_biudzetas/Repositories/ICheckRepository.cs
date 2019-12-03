@@ -1,10 +1,10 @@
-﻿using KTU_STPP_biudzetas.Models;
+﻿using KTUSTPPBiudzetas.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Repositories
+namespace KTUSTPPBiudzetas.Repositories
 {
     public interface ICheckRepository : IRepository<Check>
     {

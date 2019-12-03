@@ -5,15 +5,15 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using KTU_STPP_biudzetas.Helpers;
-using KTU_STPP_biudzetas.Models;
-using KTU_STPP_biudzetas.Services;
+using KTUSTPPBiudzetas.Helpers;
+using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace KTU_STPP_biudzetas
+namespace KTUSTPPBiudzetas
 {
     public class UserService : IUserService
     {

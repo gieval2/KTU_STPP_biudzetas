@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace KTU_STPP_biudzetas.Models
+namespace KTUSTPPBiudzetas.Models
 {
     public class BudgetContext : IdentityDbContext<User>
     {

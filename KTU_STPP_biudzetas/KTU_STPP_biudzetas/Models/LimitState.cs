@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Models
+namespace KTUSTPPBiudzetas.Models
 {
     public enum LimitState
     {

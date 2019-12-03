@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 
-namespace KTU_STPP_biudzetas.Models
+namespace KTUSTPPBiudzetas.Models
 {
     public class User : IdentityUser
     {

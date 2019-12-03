@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using KTU_STPP_biudzetas.Models;
+using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace KTU_STPP_biudzetas.Controllers
+namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     //[Route("api/Members/{memberId}/Messages")]

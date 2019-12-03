@@ -1,12 +1,12 @@
-﻿using KTU_STPP_biudzetas.Models;
-using KTU_STPP_biudzetas.Models.Shared;
+﻿using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Models.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Repositories
+namespace KTUSTPPBiudzetas.Repositories
 {
     public class Repository<TEntity> : IRepository<TEntity> where TEntity : Entity
     {

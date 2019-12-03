@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using KTU_STPP_biudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
-using KTU_STPP_biudzetas.Services;
 using System;
+using KTUSTPPBiudzetas.Services;
+using KTUSTPPBiudzetas.Models;
 
-namespace KTU_STPP_biudzetas.Controllers
+namespace Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     [Route("api/Checks")]

@@ -1,4 +1,4 @@
-﻿using KTU_STPP_biudzetas.Models.Shared;
+﻿using KTUSTPPBiudzetas.Models.Shared;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -6,7 +6,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Models
+namespace KTUSTPPBiudzetas.Models
 {
     public class Purchase : Entity
     {

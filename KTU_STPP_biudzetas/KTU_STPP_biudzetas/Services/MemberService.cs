@@ -1,12 +1,12 @@
-﻿using KTU_STPP_biudzetas.Models;
-using KTU_STPP_biudzetas.Repositories;
+﻿using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace KTU_STPP_biudzetas.Services
+namespace KTUSTPPBiudzetas.Services
 {
     public class MemberService : IMemberService
     {

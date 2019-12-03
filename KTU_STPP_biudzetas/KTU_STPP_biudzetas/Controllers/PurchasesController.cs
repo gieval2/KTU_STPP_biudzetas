@@ -3,35 +3,35 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using KTU_STPP_biudzetas.Models;
+using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
+using KTUSTPPBiudzetas.Services;
 
-namespace KTU_STPP_biudzetas.Controllers
+namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     [Route("api/Purchases")]
     [ApiController]
     public class PurchasesController : ControllerBase
     {
-        private readonly BudgetContext _context;
-
-        public PurchasesController(BudgetContext context)
+        private readonly IPurchaseService _purchaseService;
+        public PurchasesController(IPurchaseService purchaseService)
         {
-            _context = context;
+            _purchaseService = purchaseService;
         }
 
         // GET: api/Purchases
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Purchase>>> GetPurchases()
+        public async Task<IEnumerable<Purchase>> GetPurchases()
         {
-            return await _context.Purchases.ToListAsync();
+            return await _purchaseService.GetAllAsync();
         }
 
         // GET: api/Purchases/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Purchase>> GetPurchase(int id)
         {
-            var purchase = await _context.Purchases.FindAsync(id);
+            var purchase = await _purchaseService.GetAsync(id);
 
             if (purchase == null)
             {
@@ -43,18 +43,16 @@ namespace KTU_STPP_biudzetas.Controllers
 
         // PUT: api/Purchases/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPurchase(int id, Purchase purchase)
+        public async Task<IActionResult> PutPurchase(int id,[FromBody] Purchase purchase)
         {
             if (id != purchase.Id)
             {
                 return BadRequest();
             }
 
-            _context.Entry(purchase).State = EntityState.Modified;
-
             try
             {
-                await _context.SaveChangesAsync();
+                await _purchaseService.UpdateAsync(purchase);
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -73,10 +71,9 @@ namespace KTU_STPP_biudzetas.Controllers
 
         // POST: api/Purchases
         [HttpPost]
-        public async Task<ActionResult<Purchase>> PostPurchase(Purchase purchase)
+        public async Task<ActionResult<Purchase>> PostPurchase([FromBody] Purchase purchase)
         {
-            _context.Purchases.Add(purchase);
-            await _context.SaveChangesAsync();
+            await _purchaseService.CreateAsync(purchase);
 
             //return CreatedAtAction("GetPurchase", new { id = purchase.Id }, purchase);
             return CreatedAtAction(nameof(GetPurchase), new { id = purchase.Id }, purchase);
@@ -87,21 +84,20 @@ namespace KTU_STPP_biudzetas.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<Purchase>> DeletePurchase(int id)
         {
-            var purchase = await _context.Purchases.FindAsync(id);
+            var purchase = await _purchaseService.GetAsync(id);
             if (purchase == null)
             {
                 return NotFound();
             }
 
-            _context.Purchases.Remove(purchase);
-            await _context.SaveChangesAsync();
+            await _purchaseService.DeleteAsync(id);
 
             return purchase;
         }
 
         private bool PurchaseExists(int id)
         {
-            return _context.Purchases.Any(e => e.Id == id);
+            return _purchaseService.GetAllAsync().Result.Any(e => e.Id == id);
         }
     }
 }
