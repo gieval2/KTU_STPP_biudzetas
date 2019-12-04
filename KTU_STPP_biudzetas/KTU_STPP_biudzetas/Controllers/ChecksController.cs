@@ -7,7 +7,7 @@ using System;
 using KTUSTPPBiudzetas.Services;
 using KTUSTPPBiudzetas.Models;
 
-namespace Controllers
+namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     [Route("api/Checks")]
@@ -15,9 +15,14 @@ namespace Controllers
     public class ChecksController : ControllerBase
     {
         private readonly ICheckService _checkService;
-        public ChecksController(ICheckService checkService)
+        private readonly IMemberService _memberService;
+        private readonly IPurchaseService _purchaseService;
+
+        public ChecksController(ICheckService checkService, IPurchaseService purchaseService, IMemberService memberService)
         {
             _checkService = checkService;
+            _memberService = memberService;
+            _purchaseService = purchaseService;
         }
 
         // GET: api/Checks
@@ -63,7 +68,7 @@ namespace Controllers
                 }
                 else
                 {
-                    return BadRequest(e.InnerException); ;
+                    return BadRequest(e.InnerException);
                 }
             }
 
@@ -74,8 +79,19 @@ namespace Controllers
         [HttpPost]
         public async Task<ActionResult<Check>> PostCheck([FromBody] Check check)
         {
-            await _checkService.CreateAsync(check);
-
+            try
+            {
+                Member member = await _memberService.GetAsync((int)check.MemberId);
+                check.Member = member;
+                //check.Purchases = new List<Purchase>();
+                check = await _checkService.CreateAsync(check);
+                member.Checks.Add(check);
+                await _memberService.UpdateAsync(member);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
             //return CreatedAtAction("GetCheck", new { id = check.Id }, check);
             return CreatedAtAction(nameof(GetCheck), new { id = check.Id }, check);
         }
@@ -90,7 +106,16 @@ namespace Controllers
             {
                 return NotFound();
             }
-
+            
+            if (check.Purchases.Count != 0)
+            {
+                foreach (var purchase in check.Purchases)
+                {
+                    await _purchaseService.DeleteAsync(purchase.Id);
+                }
+                check.Purchases = new List<Purchase>();
+            }
+            
             await _checkService.DeleteAsync(id);
 
             return check;

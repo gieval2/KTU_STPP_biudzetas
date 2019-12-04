@@ -77,6 +77,10 @@ namespace KTUSTPPBiudzetas.Controllers
         [HttpPost]
         public async Task<ActionResult<Member>> Post([FromBody] Member user)
         {
+            user.Checks = new List<Check>();
+            user.Sent = new List<Message>();
+            user.Recieved = new List<Message>();
+
             await _memberService.CreateAsync(user);
 
             //return CreatedAtAction("GetUser", new { id = user.Id }, user);

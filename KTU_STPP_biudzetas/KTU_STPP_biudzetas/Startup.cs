@@ -5,7 +5,6 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.EntityFrameworkCore;
 using KTUSTPPBiudzetas.Models;
-using KTUSTPPBiudzetas.Helpers;
 using KTUSTPPBiudzetas.Services;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -31,23 +30,13 @@ namespace KTUSTPPBiudzetas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<BudgetContext>(cfg => cfg.UseSqlServer(Configuration.GetConnectionString("BudgetConnectionString")));
-            
-            services.AddCors();
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            // configure strongly typed settings objects
-            var appSettingsSection = Configuration.GetSection("AppSettings");
-            services.Configure<AppSettings>(appSettingsSection);
-
             services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<BudgetContext>()
                 .AddDefaultTokenProviders();
 
-            // configure jwt authentication
-            var appSettings = appSettingsSection.Get<AppSettings>();
-            var key = Encoding.ASCII.GetBytes(appSettings.Secret);
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            // configure jwt authentication
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
             services.AddAuthentication(x =>
             {
@@ -82,6 +71,15 @@ namespace KTUSTPPBiudzetas
             services.AddScoped<IMemberRepository, MemberRepository>();
             services.AddScoped<IMemberService, MemberService>();
 
+            services.AddScoped<ICheckRepository, CheckRepository>();
+            services.AddScoped<ICheckService, CheckService>();
+
+            services.AddScoped<IPurchaseRepository, PurchaseRepository>();
+            services.AddScoped<IPurchaseService, PurchaseService>();
+
+            services.AddDbContext<BudgetContext>(cfg =>
+                cfg.UseSqlServer(Configuration.GetConnectionString("BudgetConnectionString")));
+            
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {

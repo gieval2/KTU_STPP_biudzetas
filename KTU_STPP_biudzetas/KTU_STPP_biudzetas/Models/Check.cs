@@ -15,8 +15,8 @@ namespace KTUSTPPBiudzetas.Models
 
         public ICollection<Purchase> Purchases { get; set; }
 
-        public int? UserId { get; set; }
+        public int? MemberId { get; set; }
         [NotMapped]
-        public Member User { get; set; }
+        public Member Member { get; set; }
     }
 }

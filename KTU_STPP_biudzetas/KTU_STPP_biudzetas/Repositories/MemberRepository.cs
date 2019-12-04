@@ -14,20 +14,27 @@ namespace KTUSTPPBiudzetas.Repositories
         }
         public async Task<IEnumerable<Member>> ResetLimits()
         {
-            Db.Database.ExecuteSqlCommand("UPDATE Members SET Limit = 0, LimitState = 0");
+            base.Db.Database.ExecuteSqlCommand("UPDATE Members SET Limit = 0, LimitState = 0");
             return await Task.FromResult(DbSet.ToList());
         }
 
         public async Task<Member> ConfirmLimit(int memberId)
         {
-            Db.Database.ExecuteSqlCommand($"UPDATE Members SET LimitState = 2 WHERE id = {memberId}");
+            base.Db.Database.ExecuteSqlCommand($"UPDATE Members SET LimitState = 2 WHERE id = {memberId}");
             return await GetByIdAsync(memberId);
         }
 
         public async Task<Member> SetLimit(int memberId, double newLimit)
         {
-            Db.Database.ExecuteSqlCommand($"UPDATE Members SET Limit = {newLimit}, LimitState = 1 WHERE id = {memberId}");
+            base.Db.Database.ExecuteSqlCommand($"UPDATE Members SET Limit = {newLimit}, LimitState = 1 WHERE id = {memberId}");
             return await GetByIdAsync(memberId);
+        }
+
+        public override Task<Member> GetByIdAsync(int id)
+        {
+            //return Db.Database.ExecuteSqlCommand($"GET Members INCLUDE Checks WHERE id = {id}");
+            return base.Db.Members.Include(a => a.Checks).ThenInclude(b => b.Purchases).FirstOrDefaultAsync(c => c.Id == id);
+            //return base.GetByIdAsync(id);
         }
     }
 }

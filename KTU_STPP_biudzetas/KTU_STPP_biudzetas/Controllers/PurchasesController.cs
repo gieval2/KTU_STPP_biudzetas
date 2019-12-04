@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
 using KTUSTPPBiudzetas.Services;
+using System;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
@@ -15,9 +16,11 @@ namespace KTUSTPPBiudzetas.Controllers
     public class PurchasesController : ControllerBase
     {
         private readonly IPurchaseService _purchaseService;
-        public PurchasesController(IPurchaseService purchaseService)
+        private readonly ICheckService _checkService;
+        public PurchasesController(IPurchaseService purchaseService, ICheckService checkService)
         {
             _purchaseService = purchaseService;
+            _checkService = checkService;
         }
 
         // GET: api/Purchases
@@ -73,8 +76,19 @@ namespace KTUSTPPBiudzetas.Controllers
         [HttpPost]
         public async Task<ActionResult<Purchase>> PostPurchase([FromBody] Purchase purchase)
         {
-            await _purchaseService.CreateAsync(purchase);
-
+            try
+            {
+                Check check = await _checkService.GetAsync((int)purchase.CheckId);
+                check.Purchases = new List<Purchase>();
+                purchase.Check = check;
+                purchase = await _purchaseService.CreateAsync(purchase);
+                check.Purchases.Add(purchase);
+                await _checkService.UpdateAsync(check);
+            }
+            catch (Exception e)
+            {
+                return BadRequest(e.InnerException);
+            }
             //return CreatedAtAction("GetPurchase", new { id = purchase.Id }, purchase);
             return CreatedAtAction(nameof(GetPurchase), new { id = purchase.Id }, purchase);
         }

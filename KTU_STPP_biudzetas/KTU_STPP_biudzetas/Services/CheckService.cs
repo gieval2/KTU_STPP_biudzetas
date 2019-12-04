@@ -2,6 +2,7 @@
 using KTUSTPPBiudzetas.Repositories;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KTUSTPPBiudzetas.Services
@@ -42,8 +43,8 @@ namespace KTUSTPPBiudzetas.Services
 
         public async Task<Check> GetAsync(int id)
         {
-            var data = await _checkRepository.GetByIdAsync(id);
-            return data;
+            var data = await _checkRepository.GetCheckByIdAsync(id);
+            return data.First();
         }
 
         public async Task<Check> UpdateAsync(Check updateData)
@@ -53,7 +54,7 @@ namespace KTUSTPPBiudzetas.Services
             var oldData = await _checkRepository.GetByIdAsync(updateData.Id);
             if (oldData == null) throw new InvalidOperationException($"Event with the id: {updateData.Id} was not found");
 
-            await _checkRepository.UpdateAsync(oldData);
+            await _checkRepository.UpdateAsync(updateData);
             return oldData;
         }
     }

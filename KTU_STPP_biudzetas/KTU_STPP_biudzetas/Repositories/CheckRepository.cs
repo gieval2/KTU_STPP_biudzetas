@@ -1,5 +1,6 @@
 ﻿using KTUSTPPBiudzetas.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace KTUSTPPBiudzetas.Repositories
@@ -11,10 +12,20 @@ namespace KTUSTPPBiudzetas.Repositories
 
         }
 
-        public override Task<Check> GetByIdAsync(int id)
+        public async Task<IQueryable<Check>> GetCheckByIdAsync(int id)
         {
-            return Db.Checks.Include(b => b.Purchases).FirstOrDefaultAsync(c => c.Id == id);
+            //return await Task.FromResult(DbSet.Where(x => x.EmployeeId == employeeId));
+            return await Task.FromResult(DbSet.Where(c => c.Id == id));
+            //return await Task.FromResult(DbSet.Include(b => b.Purchases).Include(a => a.Member).Where(c => c.Id == id));
+            //return await Task.FromResult(DbSet.Include(b => b.Purchases).Include(a => a.Member).FirstOrDefaultAsync(c => c.Id == id));
+            //return base.Db.Checks.Include(b => b.Purchases).Include(a => a.Member).FirstOrDefaultAsync(c => c.Id == id);
             //return base.GetByIdAsync(id);
         }
+
+        //public override Task<Check> AddAsync(Check obj)
+        //{
+        //    Db.Members.Update(b => b.Checks).FirstOrDefaultAsync(c => c.Id == id);
+        //    return base.AddAsync(obj);
+        //}
     }
 }

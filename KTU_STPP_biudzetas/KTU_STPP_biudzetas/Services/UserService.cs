@@ -5,12 +5,10 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using KTUSTPPBiudzetas.Helpers;
 using KTUSTPPBiudzetas.Models;
 using KTUSTPPBiudzetas.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
 namespace KTUSTPPBiudzetas
@@ -24,9 +22,8 @@ namespace KTUSTPPBiudzetas
         private readonly IMemberService _memberService;
 
 
-        public UserService(IOptions<AppSettings> appSettings, IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager, IMemberService memberService)
+        public UserService(IConfiguration configuration, SignInManager<User> signInManager, UserManager<User> userManager, IMemberService memberService)
         {
-            //_appSettings = appSettings.Value;
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;

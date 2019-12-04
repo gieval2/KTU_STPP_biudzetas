@@ -8,5 +8,6 @@ namespace KTUSTPPBiudzetas.Repositories
 {
     public interface ICheckRepository : IRepository<Check>
     {
+        Task<IQueryable<Check>> GetCheckByIdAsync(int id);
     }
 }
