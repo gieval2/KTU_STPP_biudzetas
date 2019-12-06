@@ -15,6 +15,8 @@ using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Collections.Generic;
 using Swashbuckle.AspNetCore.Swagger;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.UI;
 
 namespace KTUSTPPBiudzetas
 {
@@ -30,12 +32,17 @@ namespace KTUSTPPBiudzetas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                // This lambda determines whether user consent for non-essential cookies is needed for a given request.
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddIdentity<User, IdentityRole>()
+                .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<BudgetContext>()
                 .AddDefaultTokenProviders();
-
-            //services.AddControllersWithViews();
-            //services.AddRazorPages();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -127,6 +134,7 @@ namespace KTUSTPPBiudzetas
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+                app.UseDatabaseErrorPage();
             }
             else
             {
@@ -135,35 +143,28 @@ namespace KTUSTPPBiudzetas
                 app.UseHsts();
             }
 
+            app.UseHttpsRedirection();
+            app.UseStaticFiles();
+            app.UseCookiePolicy();
             app.UseAuthentication();
 
-            // Enable middleware to serve generated Swagger as a JSON endpoint.
-            app.UseSwagger();
+            //// Enable middleware to serve generated Swagger as a JSON endpoint.
+            //app.UseSwagger();
 
-            // Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
-            // specifying the Swagger JSON endpoint.
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/budget/swagger.json", "My API V1");
-                c.RoutePrefix = "budget";
-            });
-
-            app.UseHttpsRedirection();
-            app.UseMvc();
-
-            //app.UseRouting();
-
-            //app.UseAuthentication();
-            //app.UseAuthorization();
-            //app.UseStaticFiles();
-            //app.UseCookiePolicy();
-
-            //app.UseMvc(routes =>
+            //// Enable middleware to serve swagger-ui (HTML, JS, CSS, etc.),
+            //// specifying the Swagger JSON endpoint.
+            //app.UseSwaggerUI(c =>
             //{
-            //    routes.MapRoute(
-            //        name: "default",
-            //        template: "{controller=Home}/{action=Index}/{id?}");
+            //    c.SwaggerEndpoint("/swagger/budget/swagger.json", "My API V1");
+            //    c.RoutePrefix = "budget";
             //});
+
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }
