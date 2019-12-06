@@ -34,6 +34,9 @@ namespace KTUSTPPBiudzetas
                 .AddEntityFrameworkStores<BudgetContext>()
                 .AddDefaultTokenProviders();
 
+            //services.AddControllersWithViews();
+            //services.AddRazorPages();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // configure jwt authentication
@@ -148,6 +151,10 @@ namespace KTUSTPPBiudzetas
             app.UseHttpsRedirection();
             app.UseMvc();
 
+            //app.UseRouting();
+
+            //app.UseAuthentication();
+            //app.UseAuthorization();
             //app.UseStaticFiles();
             //app.UseCookiePolicy();
 
