@@ -9,6 +9,7 @@ using KTUSTPPBiudzetas.Models;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,6 +25,11 @@ namespace KTUSTPPBiudzetas.Controllers
         }
 
         public IActionResult Privacy()
+        {
+            return View();
+        }
+
+        public IActionResult Members()
         {
             return View();
         }

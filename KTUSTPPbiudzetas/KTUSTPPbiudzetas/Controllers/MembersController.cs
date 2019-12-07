@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
-    [Authorize(Policy = "RequireClaimMember")]
-    [Route("api/Members")]
+    //[Authorize(Policy = "RequireClaimMember")]
+    [Route("Home/Members")]
     [ApiController]
-    public class MembersController : ControllerBase
+    public class MembersController : Controller
     {
         private readonly IMemberService _memberService;
         public MembersController(IMemberService memberService)
@@ -22,9 +22,10 @@ namespace KTUSTPPBiudzetas.Controllers
 
         //GET: api/Members
         [HttpGet]
-        public async Task<IEnumerable<Member>> Get()
+        public async Task<IActionResult> Get()
         {
-            return await _memberService.GetAllAsync();
+            var members = await _memberService.GetAllAsync();
+            return View("~/Views/Members/MemberList.cshtml", members);
         }
 
         // GET: api/Members/5

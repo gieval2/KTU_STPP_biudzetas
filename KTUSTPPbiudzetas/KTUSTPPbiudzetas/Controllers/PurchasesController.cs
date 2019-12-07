@@ -11,9 +11,9 @@ using System;
 namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
-    [Route("api/Purchases")]
+    [Route("Home/Purchases")]
     [ApiController]
-    public class PurchasesController : ControllerBase
+    public class PurchasesController : Controller
     {
         private readonly IPurchaseService _purchaseService;
         private readonly ICheckService _checkService;

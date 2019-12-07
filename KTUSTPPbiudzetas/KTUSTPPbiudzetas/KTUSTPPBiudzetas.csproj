@@ -26,4 +26,9 @@
     </Content>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Messages\" />
+    <Folder Include="Views\Purchases\" />
+  </ItemGroup>
+
 </Project>

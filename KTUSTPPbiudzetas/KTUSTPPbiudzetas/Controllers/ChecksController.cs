@@ -10,9 +10,9 @@ using KTUSTPPBiudzetas.Models;
 namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
-    [Route("api/Checks")]
+    [Route("Home/Checks")]
     [ApiController]
-    public class ChecksController : ControllerBase
+    public class ChecksController : Controller
     {
         private readonly ICheckService _checkService;
         private readonly IMemberService _memberService;

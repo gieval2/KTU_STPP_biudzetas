@@ -9,9 +9,9 @@ using System.Security.Claims;
 namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
-    [Route("api/Users")]
+    [Route("Home/Users")]
     [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : Controller
     {
         //private readonly BudgetContext _context;
         private readonly IUserService _userService;

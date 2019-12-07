@@ -10,9 +10,9 @@ namespace KTUSTPPBiudzetas.Controllers
 {
     [Authorize(Policy = "RequireClaimMember")]
     //[Route("api/Members/{memberId}/Messages")]
-    [Route("api/Messages")]
+    [Route("Home/Messages")]
     [ApiController]
-    public class MessagesController : ControllerBase
+    public class MessagesController : Controller
     {
         private readonly BudgetContext _context;
 
