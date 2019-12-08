@@ -28,6 +28,13 @@ namespace KTUSTPPBiudzetas.Controllers
             return View("~/Views/Members/MemberList.cshtml", members);
         }
 
+        [HttpGet("Details{id}")]
+        public async Task<IActionResult> Details(int id)
+        {
+            var member = await _memberService.GetAsync(id);
+            return View("~/Views/Members/MemberDetails.cshtml", member);
+        }
+
         // GET: api/Members/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Member>> Get(int id)

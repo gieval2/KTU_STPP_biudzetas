@@ -10,7 +10,7 @@ using System;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
-    [Authorize(Policy = "RequireClaimMember")]
+    //[Authorize(Policy = "RequireClaimMember")]
     [Route("Home/Purchases")]
     [ApiController]
     public class PurchasesController : Controller

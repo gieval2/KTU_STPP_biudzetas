@@ -8,7 +8,7 @@ using System.Security.Claims;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
-    [Authorize(Policy = "RequireClaimMember")]
+    //[Authorize(Policy = "RequireClaimMember")]
     [Route("Home/Users")]
     [ApiController]
     public class UsersController : Controller

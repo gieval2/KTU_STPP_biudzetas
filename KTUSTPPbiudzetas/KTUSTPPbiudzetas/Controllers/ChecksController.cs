@@ -9,7 +9,7 @@ using KTUSTPPBiudzetas.Models;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
-    [Authorize(Policy = "RequireClaimMember")]
+    //[Authorize(Policy = "RequireClaimMember")]
     [Route("Home/Checks")]
     [ApiController]
     public class ChecksController : Controller
@@ -27,9 +27,10 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: api/Checks
         [HttpGet]
-        public async Task<IEnumerable<Check>> Get()
+        public async Task<ActionResult<IEnumerable<Check>>> Get()
         {
-            return await _checkService.GetAllAsync();
+            var checks = await _checkService.GetAllAsync();
+            return View("~/Views/Checks/CheckList.cshtml", checks);
         }
 
         // GET: api/Checks/5
@@ -43,7 +44,7 @@ namespace KTUSTPPBiudzetas.Controllers
                 return NotFound();
             }
 
-            return check;
+            return Ok(check);
         }
 
         // PUT: api/Checks/5
