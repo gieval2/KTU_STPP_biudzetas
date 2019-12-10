@@ -6,7 +6,7 @@ using KTUSTPPBiudzetas.Services;
 using Microsoft.AspNetCore.Authorization;
 using System.Security.Claims;
 
-namespace KTUSTPPBiudzetas.Controllers
+namespace KTUSTPPBiudzetas.ApiControllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
     [Route("Budget/Users")]

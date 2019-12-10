@@ -7,7 +7,7 @@ using System;
 using KTUSTPPBiudzetas.Services;
 using KTUSTPPBiudzetas.Models;
 
-namespace KTUSTPPBiudzetas.Controllers
+namespace KTUSTPPBiudzetas.ApiControllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
     [Route("Budget/Checks")]

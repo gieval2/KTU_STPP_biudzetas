@@ -32,7 +32,7 @@
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                @Html.ActionLink("Details", "GetPurchases", "Purchases", new { item.Id })
+                @*@Html.ActionLink("Details", "GetPurchases", "Purchases", new { item.Id })*@
                 <a asp-action="GetPurchases" asp-controller="Purchases" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
@@ -40,3 +40,6 @@
 }
     </tbody>
 </table>
+<div>
+    <a asp-controller="Budget" asp-action="Index">Back to Home</a>
+</div>

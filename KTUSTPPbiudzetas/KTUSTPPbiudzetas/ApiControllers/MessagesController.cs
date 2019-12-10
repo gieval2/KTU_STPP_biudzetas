@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
 
-namespace KTUSTPPBiudzetas.Controllers
+namespace KTUSTPPBiudzetas.ApiControllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
     //[Route("api/Members/{memberId}/Messages")]

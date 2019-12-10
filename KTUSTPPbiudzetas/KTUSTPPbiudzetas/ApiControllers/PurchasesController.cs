@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Authorization;
 using KTUSTPPBiudzetas.Services;
 using System;
 
-namespace KTUSTPPBiudzetas.Controllers
+namespace KTUSTPPBiudzetas.ApiControllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
     [Route("Budget/Purchases")]
