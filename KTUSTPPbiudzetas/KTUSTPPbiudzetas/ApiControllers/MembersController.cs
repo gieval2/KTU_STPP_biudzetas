@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 namespace KTUSTPPBiudzetas.Controllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
-    [Route("Home/Members")]
+    [Route("Budget/[controller]")]
     [ApiController]
     public class MembersController : Controller
     {
@@ -22,22 +22,23 @@ namespace KTUSTPPBiudzetas.Controllers
 
         //GET: api/Members
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<IActionResult> GetMembers()
         {
             var members = await _memberService.GetAllAsync();
+            //return Ok(members);
             return View("~/Views/Members/MemberList.cshtml", members);
         }
 
-        [HttpGet("Details{id}")]
-        public async Task<IActionResult> Details(int id)
-        {
-            var member = await _memberService.GetAsync(id);
-            return View("~/Views/Members/MemberDetails.cshtml", member);
-        }
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Details(int id)
+        //{
+        //    var member = await _memberService.GetAsync(id);
+        //    return View("~/Views/Members/MemberDetails.cshtml", member);
+        //}
 
         // GET: api/Members/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Member>> Get(int id)
+        public async Task<ActionResult<Member>> GetMember(int id)
         {
             //var user = await _context.Users.Include(a => a.Checks).ThenInclude(b => b.Purchases).FirstOrDefaultAsync(c => c.Id == id);
             var user = await _memberService.GetAsync(id);
@@ -47,13 +48,14 @@ namespace KTUSTPPBiudzetas.Controllers
                 return NotFound();
             }
 
-            return user;
+            return Ok(user);
+            //return View("~/Views/Members/MemberDetails.cshtml", user);
         }
 
         // PUT: api/Members/5
-        [Authorize(Policy = "RequireClaimFamilyHead")]
+        //[Authorize(Policy = "RequireClaimFamilyHead")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] Member user)
+        public async Task<IActionResult> PutMember(int id, [FromBody] Member user)
         {
             if (id != user.Id)
             {
@@ -77,8 +79,40 @@ namespace KTUSTPPBiudzetas.Controllers
                 }
             }
 
-            return NoContent();
+            return View("~/Views/Members/MemberEdit.cshtml", user);
         }
+
+        // PUT: api/Members/5
+        //[Authorize(Policy = "RequireClaimFamilyHead")]
+        //[HttpGet("{id}")]
+        //public async Task<IActionResult> Edit(int id, [FromBody] Member user)
+        //{
+        //    //var user = await _memberService.GetAsync(id);
+
+        //    if (id != user.Id)
+        //    {
+        //        return BadRequest();
+        //    }
+
+        //    try
+        //    {
+        //        user.Id = id;
+        //        //user = await _memberService.UpdateAsync(user);
+        //    }
+        //    catch (Exception e)
+        //    {
+        //        if (!UserExists(id))
+        //        {
+        //            return NotFound();
+        //        }
+        //        else
+        //        {
+        //            return BadRequest(e.InnerException); ;
+        //        }
+        //    }
+
+        //    return View("~/Views/Members/MemberEdit.cshtml", user);
+        //}
 
         // POST: api/Members
         [Authorize(Policy = "RequireClaimFamilyHead")]
@@ -92,7 +126,7 @@ namespace KTUSTPPBiudzetas.Controllers
             await _memberService.CreateAsync(user);
 
             //return CreatedAtAction("GetUser", new { id = user.Id }, user);
-            return CreatedAtAction(nameof(Get), new { id = user.Id }, user);
+            return CreatedAtAction(nameof(GetMember), new { id = user.Id }, user);
         }
 
         // DELETE: api/Members/5

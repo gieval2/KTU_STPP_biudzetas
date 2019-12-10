@@ -8,5 +8,6 @@ namespace KTUSTPPBiudzetas.Repositories
 {
     public interface IPurchaseRepository : IRepository<Purchase>
     {
+        Task<IEnumerable<Purchase>> GetByCheckIdAsync(int id);
     }
 }

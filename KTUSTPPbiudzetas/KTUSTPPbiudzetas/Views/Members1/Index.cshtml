@@ -1,10 +1,10 @@
 ﻿@model IEnumerable<KTUSTPPBiudzetas.Models.Member>
 
 @{
-    ViewData["Title"] = "MemberList";
+    ViewData["Title"] = "Index";
 }
 
-<h1>Members</h1>
+<h1>Index</h1>
 
 <p>
     <a asp-action="Create">Create New</a>
@@ -91,10 +91,8 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                <a asp-action="Edit" asp-controller="Budget" asp-route-id="@item.Id">Edit</a> |
-
-                @*@Html.ActionLink("Edit", "Edit", "Members", new { item.Id, item })*@
-                @*<a asp-action="GetMember" asp-controller="Members" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
                 <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>

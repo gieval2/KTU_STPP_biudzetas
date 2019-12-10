@@ -47,6 +47,12 @@ namespace KTUSTPPBiudzetas.Services
             return data;
         }
 
+        public async Task<IEnumerable<Purchase>> GetByCheckIdAsync(int id)
+        {
+            var data = await _purchaseRepository.GetByCheckIdAsync(id);
+            return data;
+        }
+
         public async Task<Purchase> UpdateAsync(Purchase updateData)
         {
             if (updateData == null) throw new ArgumentNullException(nameof(Member));

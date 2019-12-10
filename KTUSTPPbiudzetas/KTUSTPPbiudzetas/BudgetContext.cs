@@ -1,13 +1,16 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace KTUSTPPBiudzetas.Models
 {
     public class BudgetContext : IdentityDbContext<User>
     {
-        public BudgetContext(DbContextOptions<BudgetContext> options) : base(options)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+
+        public BudgetContext(DbContextOptions<BudgetContext> options, IHttpContextAccessor httpContextAccessor) : base(options)
         {
-            
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public DbSet<Member> Members { get; set; }

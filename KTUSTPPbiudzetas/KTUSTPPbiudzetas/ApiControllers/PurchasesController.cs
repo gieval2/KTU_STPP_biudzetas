@@ -11,7 +11,8 @@ using System;
 namespace KTUSTPPBiudzetas.Controllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
-    [Route("Home/Purchases")]
+    [Route("Budget/Purchases")]
+    //[Route("Budget/Checks/{CheckId}/[controller]")]
     [ApiController]
     public class PurchasesController : Controller
     {
@@ -25,14 +26,17 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: api/Purchases
         [HttpGet]
-        public async Task<IEnumerable<Purchase>> GetPurchases()
+        public async Task<ActionResult<IEnumerable<Purchase>>> GetPurchases(int id)
         {
-            return await _purchaseService.GetAllAsync();
+            var check = await _checkService.GetAsync(id);
+            var purchases = await _purchaseService.GetByCheckIdAsync(id);
+            //var purchases = await _purchaseService.GetAllAsync();
+            return View("~/Views/Purchases/PurchaseList.cshtml", purchases);
         }
 
         // GET: api/Purchases/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Purchase>> GetPurchase(int id)
+        public async Task<ActionResult<Purchase>> GetPurchase(int CheckId, int id)
         {
             var purchase = await _purchaseService.GetAsync(id);
 
@@ -46,7 +50,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // PUT: api/Purchases/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutPurchase(int id,[FromBody] Purchase purchase)
+        public async Task<IActionResult> PutPurchase(int CheckId, int id,[FromBody] Purchase purchase)
         {
             if (id != purchase.Id)
             {
@@ -74,7 +78,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // POST: api/Purchases
         [HttpPost]
-        public async Task<ActionResult<Purchase>> PostPurchase([FromBody] Purchase purchase)
+        public async Task<ActionResult<Purchase>> PostPurchase(int CheckId, [FromBody] Purchase purchase)
         {
             try
             {
@@ -96,7 +100,7 @@ namespace KTUSTPPBiudzetas.Controllers
         // DELETE: api/Purchases/5
         [Authorize(Policy = "RequireClaimFamilyHead")]
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Purchase>> DeletePurchase(int id)
+        public async Task<ActionResult<Purchase>> Delete(int CheckId, int id)
         {
             var purchase = await _purchaseService.GetAsync(id);
             if (purchase == null)

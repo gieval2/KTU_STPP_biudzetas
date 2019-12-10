@@ -17,6 +17,11 @@ using System.Collections.Generic;
 using Swashbuckle.AspNetCore.Swagger;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI;
+using Microsoft.AspNetCore.Routing;
+using System.Web.Http;
+using System.Web.Http.Routing;
+using System.Web.Mvc;
+using System.Net.Http;
 
 namespace KTUSTPPBiudzetas
 {
@@ -43,6 +48,8 @@ namespace KTUSTPPBiudzetas
                 .AddDefaultUI(UIFramework.Bootstrap4)
                 .AddEntityFrameworkStores<BudgetContext>()
                 .AddDefaultTokenProviders();
+
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -93,7 +100,7 @@ namespace KTUSTPPBiudzetas
             // Register the Swagger generator, defining 1 or more Swagger documents
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("budget", new Info { Title = "My API", Version = "v1" });
+                c.SwaggerDoc("Budget", new Info { Title = "My API", Version = "v1" });
 
                 c.AddSecurityDefinition("Bearer", new ApiKeyScheme
                 {
@@ -138,7 +145,7 @@ namespace KTUSTPPBiudzetas
             }
             else
             {
-                app.UseExceptionHandler("/Home/Error");
+                app.UseExceptionHandler("/Budget/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
@@ -146,7 +153,8 @@ namespace KTUSTPPBiudzetas
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseCookiePolicy();
-            app.UseAuthentication();
+
+            //app.UseAuthentication();
 
             //// Enable middleware to serve generated Swagger as a JSON endpoint.
             //app.UseSwagger();
@@ -159,11 +167,50 @@ namespace KTUSTPPBiudzetas
             //    c.RoutePrefix = "budget";
             //});
 
+            //app.UseMvc();
+            app.UseMvcWithDefaultRoute();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
+                    //name: "default",
+                    //template: "{controller}/{id?}",
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller}/{id?}",
+                    defaults: new { controller = "Budget", action = "Index" }
+                    );
+                //routes.MapRoute(null,
+                //    template: "Budget/{controller}/{id}", // URL with parameters
+                //    new { controller = "Members", action = "Get" }
+                //    //new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+                //);
+                //routes.MapRoute(null,
+                //    template: "Budget/{controller}/{id}", // URL with parameters
+                //    new { controller = "Members", action = "GetMembers" }
+                //    //new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+                //);
+                //routes.MapRoute(null,
+                //    template: "Budget/{controller}/{id}", // URL with parameters
+                //    new { controller = "Members", action = "Edit" }
+                //    //new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
+                //);
+                //routes.MapRoute(null,
+                //  "{controller}/{id}", // URL with parameters
+                //  new { controller = "Members", action = "Put", id = UrlParameter.Optional },
+                //  new { httpMethod = new HttpMethodConstraint(HttpMethod.Put) }
+                //);
+
+                //routes.MapRoute(null,
+                //  "{controller}", // URL with parameters
+                //  new { controller = "Members", action = "Post", id = UrlParameter.Optional },
+                //  new { httpMethod = new HttpMethodConstraint(HttpMethod.Post) }
+                //);
+
+                //routes.MapRoute(null,
+                //  "{controller}/{id}", // URL with parameters
+                //  new { controller = "Members", action = "Delete", id = UrlParameter.Optional },
+                //  new { httpMethod = new HttpMethodConstraint(HttpMethod.Delete) }
+                //);
             });
         }
     }

@@ -13,5 +13,6 @@ namespace KTUSTPPBiudzetas.Services
         Task<Purchase> CreateAsync(Purchase user);
         Task<Purchase> UpdateAsync(Purchase user);
         Task DeleteAsync(int id);
+        Task<IEnumerable<Purchase>> GetByCheckIdAsync(int id);
     }
 }

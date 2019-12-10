@@ -12,5 +12,10 @@ namespace KTUSTPPBiudzetas.Repositories
         {
 
         }
+
+        public async Task<IEnumerable<Purchase>> GetByCheckIdAsync(int id)
+        {
+            return await Task.FromResult(DbSet.Where(c => c.CheckId == id));
+        }
     }
 }

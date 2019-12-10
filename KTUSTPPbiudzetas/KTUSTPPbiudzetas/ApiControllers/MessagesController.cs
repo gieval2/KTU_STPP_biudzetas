@@ -10,7 +10,7 @@ namespace KTUSTPPBiudzetas.Controllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
     //[Route("api/Members/{memberId}/Messages")]
-    [Route("Home/Messages")]
+    [Route("Budget/Messages")]
     [ApiController]
     public class MessagesController : Controller
     {
@@ -23,7 +23,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: api/Messages
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Message>>> Get()
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessages()
         {
             var messages = await _context.Messages.ToListAsync();
             return View("~/Views/Messages/MessageList.cshtml", messages);
@@ -31,7 +31,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: api/Messages/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Message>> Get(int id)
+        public async Task<ActionResult<Message>> GetMessage(int id)
         {
             Message message = await _context.Messages.FirstOrDefaultAsync(c => c.Id == id);
 
@@ -45,7 +45,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // PUT: api/Messages/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> Put(int id, Message message)
+        public async Task<IActionResult> PutMessage(int id, Message message)
         {
             if (id != message.Id)
             {
@@ -75,13 +75,13 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // POST: api/Messages
         [HttpPost]
-        public async Task<ActionResult<Message>> Post(Message message)
+        public async Task<ActionResult<Message>> PostMessage(Message message)
         {
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
 
             //return CreatedAtAction("GetMessage", new { id = message.Id }, message);
-            return CreatedAtAction(nameof(Get), new { id = message.Id }, message);
+            return CreatedAtAction(nameof(GetMessage), new { id = message.Id }, message);
         }
 
         // DELETE: api/Messages/5

@@ -10,7 +10,7 @@ using KTUSTPPBiudzetas.Models;
 namespace KTUSTPPBiudzetas.Controllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
-    [Route("Home/Checks")]
+    [Route("Budget/Checks")]
     [ApiController]
     public class ChecksController : Controller
     {
@@ -27,43 +27,43 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: api/Checks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Check>>> Get()
+        public async Task<ActionResult<IEnumerable<Check>>> GetChecks()
         {
             var checks = await _checkService.GetAllAsync();
             return View("~/Views/Checks/CheckList.cshtml", checks);
         }
 
         // GET: api/Checks/5
-        [HttpGet("{id}")]
-        public async Task<ActionResult<Check>> GetCheck(int id)
+        [HttpGet("{CheckId}")]
+        public async Task<ActionResult<Check>> GetCheck(int CheckId)
         {
-            var check = await _checkService.GetAsync(id);
+            var check = await _checkService.GetAsync(CheckId);
 
             if (check == null)
             {
                 return NotFound();
             }
 
-            return Ok(check);
+            return check;
         }
 
         // PUT: api/Checks/5
-        [HttpPut("{id}")]
-        public async Task<IActionResult> PutCheck(int id, Check check)
+        [HttpPut("{CheckId}")]
+        public async Task<IActionResult> Put(int CheckId, Check check)
         {
-            if (id != check.Id)
+            if (CheckId != check.Id)
             {
                 return BadRequest();
             }
 
             try
             {
-                check.Id = id;
+                check.Id = CheckId;
                 await _checkService.UpdateAsync(check);
             }
             catch (Exception e)
             {
-                if (!CheckExists(id))
+                if (!CheckExists(CheckId))
                 {
                     return NotFound();
                 }
@@ -78,7 +78,7 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // POST: api/Checks
         [HttpPost]
-        public async Task<ActionResult<Check>> PostCheck([FromBody] Check check)
+        public async Task<ActionResult<Check>> Post([FromBody] Check check)
         {
             try
             {
@@ -99,10 +99,10 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // DELETE: api/Checks/5
         [Authorize(Policy = "RequireClaimFamilyHead")]
-        [HttpDelete("{id}")]
-        public async Task<ActionResult<Check>> DeleteCheck(int id)
+        [HttpDelete("{CheckId}")]
+        public async Task<ActionResult<Check>> Delete(int CheckId)
         {
-            var check = await _checkService.GetAsync(id);
+            var check = await _checkService.GetAsync(CheckId);
             if (check == null)
             {
                 return NotFound();
@@ -117,7 +117,7 @@ namespace KTUSTPPBiudzetas.Controllers
                 check.Purchases = new List<Purchase>();
             }
             
-            await _checkService.DeleteAsync(id);
+            await _checkService.DeleteAsync(CheckId);
 
             return check;
         }
