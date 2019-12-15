@@ -1,16 +1,16 @@
 ﻿@model KTUSTPPBiudzetas.Models.Purchase
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Create";
 }
 
-<h1>Edit</h1>
+<h1>Create</h1>
 
 <h4>Purchase</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Name" class="control-label"></label>
@@ -29,24 +29,22 @@
             </div>
             @*<div class="form-group">
                 <label asp-for="CheckId" class="control-label"></label>
-                <select asp-for="CheckId" class="form-control" asp-items="ViewBag.CheckId"></select>
-                <span asp-validation-for="CheckId" class="text-danger"></span>
+                <select asp-for="CheckId" class ="form-control" asp-items="ViewBag.CheckId"></select>
             </div>*@
-            <input type="hidden" asp-for="Id" />
             @*<div class="form-group">
                 <label asp-for="LastUpdated" class="control-label"></label>
                 <input asp-for="LastUpdated" class="form-control" />
                 <span asp-validation-for="LastUpdated" class="text-danger"></span>
             </div>*@
             <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="GetPurchases" asp-controller="Purchases" asp-route-CheckId="@Model.CheckId" >Back to List</a>
+    <a asp-controller="Purchases" asp-action="GetPurchases" asp-route-CheckId="@ViewData["CheckId"]">Back to List</a>
 </div>
 
 @section Scripts {

@@ -50,6 +50,8 @@ namespace KTUSTPPBiudzetas.Controllers
             //return View("~/Views/Members/MemberEdit.cshtml", user);
         }
 
+        
+
         //public IActionResult Members()
         //{
         //    return View();

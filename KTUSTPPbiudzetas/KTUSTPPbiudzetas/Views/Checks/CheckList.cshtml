@@ -7,7 +7,7 @@
 <h1>CheckList</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-controller="Checks">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -31,10 +31,10 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-action="Edit" asp-controller="Checks" asp-route-id="@item.Id">Edit</a> |
                 @*@Html.ActionLink("Details", "GetPurchases", "Purchases", new { item.Id })*@
-                <a asp-action="GetPurchases" asp-controller="Purchases" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="GetPurchases" asp-controller="Purchases" asp-route-CheckId="@item.Id" >Details</a> |
+                <a asp-action="Delete" asp-controller="Checks" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }

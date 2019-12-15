@@ -12,6 +12,26 @@ a {
   color: #0366d6;
 }
 
+.container {
+    /*float: left;
+    overflow: hidden;
+    margin: 20px;*/
+}
+
+.container img {
+    align-content: center;
+}
+
+.portrait img {
+    max-width: 100%;
+    width: auto;
+}
+
+.landscape img {
+    max-height: 100%;
+    height: auto;
+}
+
 .btn-primary {
   color: #fff;
   background-color: #1b6ec2;

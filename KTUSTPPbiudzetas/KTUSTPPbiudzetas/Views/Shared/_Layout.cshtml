@@ -9,6 +9,19 @@
 </head>
 <body>
     <header>
+        @*<img src="~/top.png" width="150" height="50" />*@
+        @*<table class="center">
+            <tr>
+                <td>*@
+        <center>
+            <div class="container portrait">
+                <img src="~/top.png" width="800" height="230">
+            </div>
+        </center>
+                @*</td>
+            </tr>
+            <tr><td>
+        </table>*@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Budget" asp-action="Index">KTUSTPPBiudzetas</a>
@@ -38,7 +51,7 @@
                 </div>
             </div>
         </nav>
-    </header>
+</header>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

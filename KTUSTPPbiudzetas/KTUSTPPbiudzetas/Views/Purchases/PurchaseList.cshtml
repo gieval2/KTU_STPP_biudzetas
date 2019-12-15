@@ -7,7 +7,7 @@
 <h1>PurchaseList</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" asp-controller="Purchases" asp-route-CheckId="@ViewData["CheckId"]">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -43,14 +43,14 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-action="Edit" asp-controller="Purchases" asp-route-id="@item.Id" asp-route-CheckId="@item.CheckId">Edit</a> |
+                @*<a asp-action="Details" asp-route-id="@item.Id">Details</a> |*@
+                <a asp-action="Delete" asp-controller="Purchases" asp-route-id="@item.Id" asp-route-CheckId="@item.CheckId">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
 <div>
-    <a asp-controller="Budget" asp-action="Index">Back to Home</a>
+    <a asp-controller="Checks" asp-action="GetChecks">Back to List</a>
 </div>

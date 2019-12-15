@@ -7,12 +7,13 @@ using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
 using KTUSTPPBiudzetas.Services;
 using System;
+using System.Net.Http;
 
 namespace KTUSTPPBiudzetas.ApiControllers
 {
     //[Authorize(Policy = "RequireClaimMember")]
-    [Route("Budget/Purchases")]
-    //[Route("Budget/Checks/{CheckId}/[controller]")]
+    //[Route("Budget/Purchases")]
+    [Route("Budget/Checks/{CheckId}/[controller]")]
     [ApiController]
     public class PurchasesController : Controller
     {
@@ -26,12 +27,15 @@ namespace KTUSTPPBiudzetas.ApiControllers
 
         // GET: api/Purchases
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Purchase>>> GetPurchases(int id)
+        //[NonAction]
+        public async Task<ActionResult<IEnumerable<Purchase>>> GetPurchases(int CheckId)
         {
-            var check = await _checkService.GetAsync(id);
-            var purchases = await _purchaseService.GetByCheckIdAsync(id);
+            var check = await _checkService.GetAsync(CheckId);
+            var purchases = await _purchaseService.GetByCheckIdAsync(CheckId);
             //var purchases = await _purchaseService.GetAllAsync();
+            ViewData["CheckId"] = CheckId;
             return View("~/Views/Purchases/PurchaseList.cshtml", purchases);
+            //return purchases;
         }
 
         // GET: api/Purchases/5
@@ -45,7 +49,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
                 return NotFound();
             }
 
-            return purchase;
+            return View("~/Views/Purchases/Edit.cshtml", purchase);
         }
 
         // PUT: api/Purchases/5
@@ -83,7 +87,10 @@ namespace KTUSTPPBiudzetas.ApiControllers
             try
             {
                 Check check = await _checkService.GetAsync((int)purchase.CheckId);
-                check.Purchases = new List<Purchase>();
+                if (check.Purchases==null)
+                {
+                    check.Purchases = new List<Purchase>();
+                }
                 purchase.Check = check;
                 purchase = await _purchaseService.CreateAsync(purchase);
                 check.Purchases.Add(purchase);
@@ -94,11 +101,12 @@ namespace KTUSTPPBiudzetas.ApiControllers
                 return BadRequest(e.InnerException);
             }
             //return CreatedAtAction("GetPurchase", new { id = purchase.Id }, purchase);
-            return CreatedAtAction(nameof(GetPurchase), new { id = purchase.Id }, purchase);
+            //return CreatedAtAction(nameof(GetPurchase), new { id = purchase.Id }, purchase);
+            return Ok();
         }
 
         // DELETE: api/Purchases/5
-        [Authorize(Policy = "RequireClaimFamilyHead")]
+        //[Authorize(Policy = "RequireClaimFamilyHead")]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Purchase>> Delete(int CheckId, int id)
         {
@@ -117,5 +125,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
         {
             return _purchaseService.GetAllAsync().Result.Any(e => e.Id == id);
         }
+
+        
     }
 }

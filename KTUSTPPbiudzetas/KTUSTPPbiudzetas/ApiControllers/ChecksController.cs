@@ -29,6 +29,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Check>>> GetChecks()
         {
+            //ViewData["CheckId"] = CheckId;
             var checks = await _checkService.GetAllAsync();
             return View("~/Views/Checks/CheckList.cshtml", checks);
         }
@@ -94,7 +95,8 @@ namespace KTUSTPPBiudzetas.ApiControllers
                 return BadRequest(e.InnerException);
             }
             //return CreatedAtAction("GetCheck", new { id = check.Id }, check);
-            return CreatedAtAction(nameof(GetCheck), new { id = check.Id }, check);
+            //return CreatedAtAction(nameof(GetCheck), new { id = check.Id }, check);
+            return Ok();
         }
 
         // DELETE: api/Checks/5

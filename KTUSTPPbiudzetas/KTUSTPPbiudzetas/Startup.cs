@@ -168,20 +168,19 @@ namespace KTUSTPPBiudzetas
             //});
 
             //app.UseMvc();
-            app.UseMvcWithDefaultRoute();
+            //.UseMvcWithDefaultRoute();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    //name: "default",
-                    //template: "{controller}/{id?}",
                     name: "default",
+                    //template: "{controller}/{action}/{id?}",
                     template: "{controller}/{id?}",
                     defaults: new { controller = "Budget", action = "Index" }
                     );
                 //routes.MapRoute(null,
-                //    template: "Budget/{controller}/{id}", // URL with parameters
-                //    new { controller = "Members", action = "Get" }
+                //    template: "Checks/{CheckId}/{controller}/{PurchaseId?}", // URL with parameters
+                //    new { controller = "Purchases" }
                 //    //new { httpMethod = new HttpMethodConstraint(HttpMethod.Get) }
                 //);
                 //routes.MapRoute(null,

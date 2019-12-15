@@ -15,7 +15,7 @@ namespace KTUSTPPBiudzetas.Repositories
         public async Task<IQueryable<Check>> GetCheckByIdAsync(int id)
         {
             //return await Task.FromResult(DbSet.Where(x => x.EmployeeId == employeeId));
-            return await Task.FromResult(DbSet.Where(c => c.Id == id));
+            return await Task.FromResult(DbSet.Where(c => c.Id == id).Include(b => b.Purchases));
             //return await Task.FromResult(DbSet.Include(b => b.Purchases).Include(a => a.Member).Where(c => c.Id == id));
             //return await Task.FromResult(DbSet.Include(b => b.Purchases).Include(a => a.Member).FirstOrDefaultAsync(c => c.Id == id));
             //return base.Db.Checks.Include(b => b.Purchases).Include(a => a.Member).FirstOrDefaultAsync(c => c.Id == id);
