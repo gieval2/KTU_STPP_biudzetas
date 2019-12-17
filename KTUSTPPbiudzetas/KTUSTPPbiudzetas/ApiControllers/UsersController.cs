@@ -63,6 +63,8 @@ namespace KTUSTPPBiudzetas.ApiControllers
         [HttpPost("ChangePassword")]
         public async Task<IActionResult> ChangePassword([FromBody] User user)
         {
+            var temp = new User();
+            //temp.
             try
             {
                 var userId = User.FindFirst(x => x.Type.Equals(ClaimTypes.NameIdentifier)).Value;
