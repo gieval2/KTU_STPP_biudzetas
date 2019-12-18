@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using KTUSTPPBiudzetas.Models;
 using Microsoft.AspNetCore.Authorization;
+using System;
 
 namespace KTUSTPPBiudzetas.ApiControllers
 {
@@ -26,7 +27,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
         public async Task<ActionResult<IEnumerable<Message>>> GetMessages()
         {
             var messages = await _context.Messages.ToListAsync();
-            return View("~/Views/Messages/MessageList.cshtml", messages);
+            return View("~/Views/Messages/List.cshtml", messages);
         }
 
         // GET: api/Messages/5
@@ -77,6 +78,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
         [HttpPost]
         public async Task<ActionResult<Message>> PostMessage(Message message)
         {
+            message.LastUpdated = DateTime.UtcNow;
             _context.Messages.Add(message);
             await _context.SaveChangesAsync();
 

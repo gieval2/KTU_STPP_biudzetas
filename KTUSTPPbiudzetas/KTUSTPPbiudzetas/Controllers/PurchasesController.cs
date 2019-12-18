@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Formatting;
@@ -22,11 +23,13 @@ namespace KTUSTPPBiudzetas.Controllers
             _checkService = checkService;
         }
 
-        //[HttpGet("Budget/Members/Edit/{id}")]
-        //[Route("Budget/Checks/{CheckId}/Purchases")]
+
         //public async Task<IActionResult> Index(int CheckId)
         //{
         //    //var purchases = await _purchaseService.GetByCheckIdAsync(CheckId);
+        //    var checks = await _checkService.GetAllAsync();
+
+        //    return View("~/Views/Checks/CheckList.cshtml", checks);
         //    using (var httpClient = new HttpClient())
         //    {
         //        using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Checks/" + CheckId + "/Purchases"))
@@ -79,11 +82,14 @@ namespace KTUSTPPBiudzetas.Controllers
                     purchase.CheckId = CheckId;
                     using (var response = await httpClient.PostAsJsonAsync<Purchase>("https://localhost:44330/Budget/Checks/" + CheckId + "/Purchases",purchase))
                     {
-                        var purchases = await _purchaseService.GetByCheckIdAsync(CheckId);
-                        ViewData["CheckId"] = CheckId;
-                        return View("~/Views/Purchases/PurchaseList.cshtml", purchases);
+                        //var purchases = await response.Content.ReadAsAsync<IList<Purchase>>(); ;
+                        //ViewData["CheckId"] = CheckId;
+                        //return View("~/Views/Purchases/PurchaseList.cshtml", purchases);
                         //var apiResponse = await response.Content.ReadAsAsync<Check>();
                     }
+
+                    var purchases = await _purchaseService.GetByCheckIdAsync(CheckId);
+                    return View("~/Views/Purchases/PurchaseList.cshtml", purchases);
                 }
             }
             catch
@@ -127,7 +133,8 @@ namespace KTUSTPPBiudzetas.Controllers
                     purchase.Amount = Double.Parse(collection["Amount"]);
                     purchase.Price = Double.Parse(collection["Price"]);
                     purchase.CheckId = CheckId;
-                    using (var response = await httpClient.PostAsJsonAsync<Purchase>("https://localhost:44330/Budget/Checks/" + CheckId + "/Purchases", purchase))
+                    purchase.Id = id;
+                    using (var response = await httpClient.PutAsJsonAsync<Purchase>("https://localhost:44330/Budget/Checks/" + CheckId + "/Purchases/"+id, purchase))
                     {
                         var purchases = await _purchaseService.GetByCheckIdAsync(CheckId);
                         ViewData["CheckId"] = CheckId;
@@ -144,8 +151,17 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: Purchases/Delete/5
         [HttpGet("Budget/Checks/{CheckId}/Purchases/Delete/{id}")]
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int CheckId, int id)
         {
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Checks/" + CheckId + "/Purchases/" + id))
+                {
+                    var apiResponse = await _purchaseService.GetAsync(id);
+                    //return View("~/Views/Purchases/Edit.cshtml", apiResponse);
+                    return View(apiResponse);
+                }
+            }
             return View();
         }
 

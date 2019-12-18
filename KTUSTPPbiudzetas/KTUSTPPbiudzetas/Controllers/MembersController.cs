@@ -6,29 +6,30 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using KTUSTPPBiudzetas.Models;
+using KTUSTPPBiudzetas.Services;
+using System.Net.Http;
 
 namespace KTUSTPPBiudzetas.Controllers
 {
-    //[Route("Budget/Members1")]
-    public class Members1Controller : Controller
+    public class MembersController : Controller
     {
         private readonly BudgetContext _context;
+        private readonly IMemberService _memberService;
 
-        public Members1Controller(BudgetContext context)
+        public MembersController(BudgetContext context, IMemberService memberService)
         {
             _context = context;
+            _memberService = memberService;
         }
 
-        // GET: Members1
-        //[HttpGet]
+        // GET: Members
         public async Task<IActionResult> Index()
         {
-            var budgetContext = _context.Members.Include(m => m.User);
-            return View(await budgetContext.ToListAsync());
+            var members = _context.Members.Include(m => m.User);
+            return View(await members.ToListAsync());
         }
 
-        // GET: Members1/Details/5
-        //[HttpGet("{id}")]
+        // GET: Members/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -47,17 +48,18 @@ namespace KTUSTPPBiudzetas.Controllers
             return View(member);
         }
 
-        // GET: Members1/Create
+        // GET: Members/Create
+        [HttpGet("Budget/Members/Create")]
         public IActionResult Create()
         {
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id");
             return View();
         }
 
-        // POST: Members1/Create
+        // POST: Members/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        //[HttpPost]
+        [HttpPost("Budget/Members/Create")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("Username,Password,FirstName,LastName,Email,Family,FamilyLevel,Token,Limit,LimitState,UserId,Id,LastUpdated")] Member member)
         {
@@ -65,34 +67,38 @@ namespace KTUSTPPBiudzetas.Controllers
             {
                 _context.Add(member);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                var members = _context.Members.Include(m => m.User);
+                return View(await members.ToListAsync());
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", member.UserId);
             return View(member);
         }
 
-        // GET: Members1/Edit/5
-        //[HttpPut("{id}")]
-        public async Task<IActionResult> Edit(int? id)
+        // GET: Members/Edit/5
+        [HttpGet("Budget/Members/Edit/{id}")]
+        public async Task<IActionResult> Edit(int id)
         {
             if (id == null)
             {
                 return NotFound();
             }
 
-            var member = await _context.Members.FindAsync(id);
-            if (member == null)
+            var user = await _memberService.GetAsync(id);
+            using (var httpClient = new HttpClient())
             {
-                return NotFound();
+                using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Members/" + id))
+                {
+                    var apiResponse = await response.Content.ReadAsAsync<Member>();
+                    ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", user.UserId);
+                    return View(user);
+                }
             }
-            ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", member.UserId);
-            return View(member);
         }
 
-        // POST: Members1/Edit/5
+        // POST: Members/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
+        [HttpPost("Budget/Members/Edit/{id}")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, [Bind("Username,Password,FirstName,LastName,Email,Family,FamilyLevel,Token,Limit,LimitState,UserId,Id,LastUpdated")] Member member)
         {
@@ -105,8 +111,35 @@ namespace KTUSTPPBiudzetas.Controllers
             {
                 try
                 {
-                    _context.Update(member);
-                    await _context.SaveChangesAsync();
+                    using (var httpClient = new HttpClient())
+                    {
+                        Member user = new Member
+                        {
+                            Id = member.Id,
+                            Username = member.Username,
+                            Password = member.Password,
+                            FirstName = member.FirstName,
+                            LastName = member.LastName,
+                            Email = member.Email,
+                            Family = member.Family,
+                            FamilyLevel = member.FamilyLevel,
+                            Token = member.Token,
+                            Limit = member.Limit,
+                            LimitState = member.LimitState,
+                            UserId = member.UserId,
+                            User = member.User,
+                            Checks = member.Checks,
+                            Sent = member.Sent,
+                            Recieved = member.Recieved,
+                            LastUpdated = member.LastUpdated
+                        };
+                        using (var response = await httpClient.PutAsJsonAsync<Member>("https://localhost:44330/Budget/Members/" + id, member))
+                        {
+                            //return View(apiResponse);
+                        }
+                        var apiResponse = await _memberService.GetAllAsync();
+                        return View("~/Views/Members/MemberList.cshtml", apiResponse);
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {
@@ -119,13 +152,12 @@ namespace KTUSTPPBiudzetas.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
             }
             ViewData["UserId"] = new SelectList(_context.Users, "Id", "Id", member.UserId);
             return View(member);
         }
 
-        // GET: Members1/Delete/5
+        // GET: Members/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -144,7 +176,7 @@ namespace KTUSTPPBiudzetas.Controllers
             return View(member);
         }
 
-        // POST: Members1/Delete/5
+        // POST: Members/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

@@ -24,9 +24,11 @@ namespace KTUSTPPBiudzetas.Controllers
         }
 
         // GET: Checks
-        public ActionResult Index()
+        public async Task<ActionResult> Index()
         {
-            return View();
+            var checks = await _checkService.GetAllAsync();
+
+            return View("~/Views/Checks/CheckList.cshtml", checks);
         }
 
         // GET: Checks/Details/5
@@ -95,17 +97,19 @@ namespace KTUSTPPBiudzetas.Controllers
                 using (var httpClient = new HttpClient())
                 {
                     Check check = new Check();
+                    check.Id = id;
                     check.Date = DateTime.Parse(collection["Date"]);
                     //if (collection["MemberId"] == "")
                     //{
                         check.MemberId = 1;
                     //}
                     //check.MemberId = int.Parse(collection["MemberId"].ToString());
-                    using (var response = await httpClient.PutAsJsonAsync<Check>("https://localhost:44330/Budget/Checks", check))
+                    using (var apiResponse = await httpClient.PutAsJsonAsync<Check>("https://localhost:44330/Budget/Checks/"+id, check))
                     {
-                        var apiResponse = await response.Content.ReadAsAsync<Check>();
-                        //return View("~/Views/Checks/Edit.cshtml", apiResponse);
-                        return View(apiResponse);
+                        var response = await httpClient.GetAsync("https://localhost:44330/Budget/Checks");
+                        var checks = await response.Content.ReadAsAsync<IList<Check>>();
+                        return View("~/Views/Checks/CheckList.cshtml", checks);
+                        //return View(response.);
                     }
                 }
             }
@@ -116,7 +120,7 @@ namespace KTUSTPPBiudzetas.Controllers
         }
 
         // GET: Checks/Delete/5
-        [HttpGet("Budget/Checks/Create/{id}")]
+        [HttpGet("Budget/Checks/Delete/{id}")]
         public ActionResult Delete(int id)
         {
             return View();
@@ -134,9 +138,10 @@ namespace KTUSTPPBiudzetas.Controllers
                 {
                     using (var response = await httpClient.DeleteAsync("https://localhost:44330/Budget/Checks/" + id))
                     {
-                        var checks = await _checkService.GetAllAsync();
-                        return View("~/Views/Checks/CheckList.cshtml", checks);
+                        
                     }
+                    var checks = await _checkService.GetAllAsync();
+                    return View("~/Views/Checks/CheckList.cshtml", checks);
                 }
             }
             catch

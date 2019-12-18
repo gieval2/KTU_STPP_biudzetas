@@ -55,7 +55,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
         // PUT: api/Members/5
         //[Authorize(Policy = "RequireClaimFamilyHead")]
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMember(int id, [FromBody] Member user)
+        public async Task<ActionResult<Member>> PutMember(int id, [FromBody] Member user)
         {
             if (id != user.Id)
             {
@@ -65,7 +65,8 @@ namespace KTUSTPPBiudzetas.ApiControllers
             try
             {
                 user.Id = id;
-                await _memberService.UpdateAsync(user);
+                user.LastUpdated = DateTime.UtcNow;
+                user = await _memberService.UpdateAsync(user);
             }
             catch (Exception e)
             {
@@ -79,40 +80,8 @@ namespace KTUSTPPBiudzetas.ApiControllers
                 }
             }
 
-            return View("~/Views/Members/MemberEdit.cshtml", user);
+            return user;
         }
-
-        // PUT: api/Members/5
-        //[Authorize(Policy = "RequireClaimFamilyHead")]
-        //[HttpGet("{id}")]
-        //public async Task<IActionResult> Edit(int id, [FromBody] Member user)
-        //{
-        //    //var user = await _memberService.GetAsync(id);
-
-        //    if (id != user.Id)
-        //    {
-        //        return BadRequest();
-        //    }
-
-        //    try
-        //    {
-        //        user.Id = id;
-        //        //user = await _memberService.UpdateAsync(user);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        if (!UserExists(id))
-        //        {
-        //            return NotFound();
-        //        }
-        //        else
-        //        {
-        //            return BadRequest(e.InnerException); ;
-        //        }
-        //    }
-
-        //    return View("~/Views/Members/MemberEdit.cshtml", user);
-        //}
 
         // POST: api/Members
         [Authorize(Policy = "RequireClaimFamilyHead")]
@@ -122,7 +91,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
             user.Checks = new List<Check>();
             user.Sent = new List<Message>();
             user.Recieved = new List<Message>();
-
+            user.LastUpdated = DateTime.UtcNow;
             await _memberService.CreateAsync(user);
 
             //return CreatedAtAction("GetUser", new { id = user.Id }, user);

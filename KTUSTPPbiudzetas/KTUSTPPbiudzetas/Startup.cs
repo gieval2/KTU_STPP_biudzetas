@@ -22,6 +22,7 @@ using System.Web.Http;
 using System.Web.Http.Routing;
 using System.Web.Mvc;
 using System.Net.Http;
+using System.Globalization;
 
 namespace KTUSTPPBiudzetas
 {
@@ -154,6 +155,17 @@ namespace KTUSTPPBiudzetas
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseRequestLocalization();
+
+            CultureInfo.DefaultThreadCurrentCulture = new CultureInfo("lt");
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("lt");
+
+            System.Globalization.CultureInfo customCulture = new CultureInfo("lt");
+            customCulture.NumberFormat.NumberDecimalSeparator = ".";
+
+            CultureInfo.DefaultThreadCurrentCulture = customCulture;
+            CultureInfo.DefaultThreadCurrentUICulture = new CultureInfo("lt");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

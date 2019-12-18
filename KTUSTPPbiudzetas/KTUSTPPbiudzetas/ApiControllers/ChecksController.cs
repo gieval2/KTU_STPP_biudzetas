@@ -27,11 +27,12 @@ namespace KTUSTPPBiudzetas.ApiControllers
 
         // GET: api/Checks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Check>>> GetChecks()
+        public async Task<IEnumerable<Check>> GetChecks()
         {
             //ViewData["CheckId"] = CheckId;
             var checks = await _checkService.GetAllAsync();
-            return View("~/Views/Checks/CheckList.cshtml", checks);
+            return checks;
+            //return View("~/Views/Checks/CheckList.cshtml", checks);
         }
 
         // GET: api/Checks/5

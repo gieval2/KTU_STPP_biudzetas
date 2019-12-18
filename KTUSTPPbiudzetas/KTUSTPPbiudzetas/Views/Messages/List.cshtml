@@ -1,13 +1,13 @@
 ﻿@model IEnumerable<KTUSTPPBiudzetas.Models.Message>
 
 @{
-    ViewData["Title"] = "MessageList";
+    ViewData["Title"] = "List";
 }
 
-<h1>MessageList</h1>
+    <h1>Message List</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-controller="Messages" asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
@@ -21,12 +21,12 @@
             <th>
                 @Html.DisplayNameFor(model => model.Sender)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Reciever)
-            </th>
-            <th>
+            </th>*@
+            @*<th>
                 @Html.DisplayNameFor(model => model.LastUpdated)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -40,23 +40,23 @@
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Sender.Password)
+                @Html.DisplayFor(modelItem => item.Sender)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.Reciever.Password)
-            </td>
-            <td>
+            </td>*@
+            @*<td>
                 @Html.DisplayFor(modelItem => item.LastUpdated)
-            </td>
+            </td>*@
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @*<a asp-controller="Messages" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
+                <a asp-controller="Messages" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                @*<a asp-controller="Messages" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
 }
     </tbody>
 </table>
 <div>
-    <a asp-controller="Budget" asp-action="Index">Back to List</a>
+    <a asp-controller="Messages" asp-action="GetMessages">Back to List</a>
 </div>

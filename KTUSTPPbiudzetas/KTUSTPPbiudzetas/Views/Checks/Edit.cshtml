@@ -4,7 +4,7 @@
     ViewData["Title"] = "Edit";
 }
 
-<h1>Edit</h1>
+    <h1>Edit Check</h1>
 
 <h4>Check</h4>
 <hr />
@@ -14,14 +14,14 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input type="date" placeholder="YYYY-MM-DD" asp-for="Date" required pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
-            <div class="form-group">
+            @*<div class="form-group">
                 <label asp-for="MemberId" class="control-label"></label>
                 <select asp-for="MemberId" class="form-control" asp-items="ViewBag.MemberId"></select>
                 <span asp-validation-for="MemberId" class="text-danger"></span>
-            </div>
+            </div>*@
             <input type="hidden" asp-for="Id" />
             @*<div class="form-group">
                 <label asp-for="LastUpdated" class="control-label"></label>
@@ -36,7 +36,7 @@
 </div>
 
 <div>
-    <a asp-action="GetChecks" asp-controller="Checks">Back to List</a>
+    <a asp-action="Index" asp-controller="Checks">Back to List</a>
 </div>
 
 @section Scripts {

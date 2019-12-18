@@ -4,10 +4,10 @@
     ViewData["Title"] = "CheckList";
 }
 
-<h1>CheckList</h1>
+<h1>Check list</h1>
 
 <p>
-    <a asp-action="Create" asp-controller="Checks">Create New</a>
+    <a asp-action="Create" asp-controller="Checks">Create New Check</a>
 </p>
 <table class="table">
     <thead>
@@ -15,9 +15,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Date)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.LastUpdated)
-            </th>
+            </th>*@
             <th></th>
         </tr>
     </thead>
@@ -27,9 +27,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Date)
             </td>
-            <td>
+            @*<td>
                 @Html.DisplayFor(modelItem => item.LastUpdated)
-            </td>
+            </td>*@
             <td>
                 <a asp-action="Edit" asp-controller="Checks" asp-route-id="@item.Id">Edit</a> |
                 @*@Html.ActionLink("Details", "GetPurchases", "Purchases", new { item.Id })*@

@@ -3,39 +3,11 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - KTUSTPPBiudzetas</title>
+    <title>@ViewData["Title"] - Budget</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #d6ffed;
-        }
-
-        .navbar {
-            background-color: #a4f880
-        }
-
-        .imgbox {
-            display: grid;
-            height: 100%;
-        }
-
-        .center-fit {
-            max-width: 100%;
-            max-height: 100vh;
-            margin: auto;
-        }
-
-        .footer {
-            font-family: Castellar;
-            background-color: #c2ffa9;
-        }
-    </style>
+    <link rel="stylesheet" href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css">
+    <style> body { background-color: #d6ffed; } .navbar { background-color: #a4f880; font-family: 'French Script MT'; font-size: 30px; } .footer { font-family: Castellar; background-color: #c2ffa9; } </style>
 </head>
 <body>
     <header>
@@ -54,7 +26,7 @@
         </table>*@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Budget" asp-action="Index">KTUSTPPBiudzetas</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Budget" asp-action="Index">Budget</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -63,19 +35,19 @@
                     <partial name="_LoginPartial" />
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Budget" asp-action="Index">Home</a>
+                            <a class="nav-link ion-md-home text-dark" asp-area="" asp-controller="Budget" asp-action="Index">Home</a>
                         </li>
-                        <li class="nav-item">
+                        @*<li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Budget" asp-action="Privacy">Privacy</a>
+                        </li>*@
+                        <li class="nav-item">
+                            <a class="nav-link ion-md-people text-dark" asp-area="" asp-controller="Members" asp-action="GetMembers">Members</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Members" asp-action="GetMembers">Members</a>
+                            <a class="nav-link ion-md-chatboxes text-dark" asp-area="" asp-controller="Messages" asp-action="GetMessages">Messages</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Messages" asp-action="GetMessages">Messages</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Checks" asp-action="GetChecks">Checks</a>
+                            <a class="nav-link ion-md-wallet text-dark" asp-area="" asp-controller="Checks" asp-action="Index">Checks</a>
                         </li>
                     </ul>
                 </div>

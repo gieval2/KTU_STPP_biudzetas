@@ -34,21 +34,21 @@ namespace KTUSTPPBiudzetas.Controllers
             return View();
         }
 
-        [HttpGet("Budget/Members/Edit/{id}")]
-        public async Task<IActionResult> Edit(int id)
-        {
-            var user = await _memberService.GetAsync(id);
-            using (var httpClient = new HttpClient())
-            {
-                using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Members/" + id))
-                {
-                    var apiResponse = await response.Content.ReadAsAsync<Member>();
-                    return View("~/Views/Members/MemberEdit.cshtml", apiResponse);
-                }
-            }
+        
+        //public async Task<IActionResult> Edit(int id)
+        //{
+        //    var user = await _memberService.GetAsync(id);
+        //    using (var httpClient = new HttpClient())
+        //    {
+        //        using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Members/" + id))
+        //        {
+        //            var apiResponse = await response.Content.ReadAsAsync<Member>();
+        //            return View("~/Views/Members/MemberEdit.cshtml", apiResponse);
+        //        }
+        //    }
             
-            //return View("~/Views/Members/MemberEdit.cshtml", user);
-        }
+        //    //return View("~/Views/Members/MemberEdit.cshtml", user);
+        //}
 
         
 

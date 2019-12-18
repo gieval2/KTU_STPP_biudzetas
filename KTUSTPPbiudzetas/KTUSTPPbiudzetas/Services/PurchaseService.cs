@@ -60,7 +60,7 @@ namespace KTUSTPPBiudzetas.Services
             var oldData = await _purchaseRepository.GetByIdAsync(updateData.Id);
             if (oldData == null) throw new InvalidOperationException($"Event with the id: {updateData.Id} was not found");
 
-            await _purchaseRepository.UpdateAsync(oldData);
+            await _purchaseRepository.UpdateAsync(updateData);
             return oldData;
         }
     }

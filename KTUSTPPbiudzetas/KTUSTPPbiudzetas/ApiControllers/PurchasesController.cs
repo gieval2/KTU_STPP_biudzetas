@@ -91,6 +91,7 @@ namespace KTUSTPPBiudzetas.ApiControllers
                 {
                     check.Purchases = new List<Purchase>();
                 }
+                purchase.LastUpdated = DateTime.UtcNow;
                 purchase.Check = check;
                 purchase = await _purchaseService.CreateAsync(purchase);
                 check.Purchases.Add(purchase);
