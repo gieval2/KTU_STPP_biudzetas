@@ -6,9 +6,9 @@
 
 <h1>Members</h1>
 
-<p>
+@*<p>
     <a asp-controller="Members" asp-action="Create">Create New</a>
-</p>
+</p>*@
 <table class="table">
     <thead>
         <tr>
@@ -91,7 +91,7 @@
                 @Html.DisplayFor(modelItem => item.LastUpdated)
             </td>*@
             <td>
-                <a asp-action="Edit" asp-controller="Members" asp-route-id="@item.Id">Edit</a> @*|*@
+                @*<a asp-action="Edit" asp-controller="Members" asp-route-id="@item.Id">Edit</a>*@ @*|*@
                 @*<a asp-action="GetMember" asp-controller="Members" asp-route-id="@item.Id">Details</a> |*@
                 @*<a asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>

@@ -18,9 +18,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.Text)
             </th>
-            <th>
+            @*<th>
                 @Html.DisplayNameFor(model => model.Sender)
-            </th>
+            </th>*@
             @*<th>
                 @Html.DisplayNameFor(model => model.Reciever)
             </th>*@
@@ -39,9 +39,9 @@
             <td>
                 @Html.DisplayFor(modelItem => item.Text)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Sender)
-            </td>
+            @*<td>
+                @Html.DisplayFor(modelItem => @ViewData["SenderId"])
+            </td>*@
             @*<td>
                 @Html.DisplayFor(modelItem => item.Reciever.Password)
             </td>*@
@@ -50,7 +50,7 @@
             </td>*@
             <td>
                 @*<a asp-controller="Messages" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |*@
-                <a asp-controller="Messages" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-controller="Messages" asp-action="Details" asp-route-id="@item.Id">Details</a> @*|*@
                 @*<a asp-controller="Messages" asp-action="Delete" asp-route-id="@item.Id">Delete</a>*@
             </td>
         </tr>
