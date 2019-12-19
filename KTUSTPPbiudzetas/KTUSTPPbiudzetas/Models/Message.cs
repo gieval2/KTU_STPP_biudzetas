@@ -10,7 +10,8 @@ namespace KTUSTPPBiudzetas.Models
 {
     public class Message : Entity
     {
-        [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
         [Required]
         public string Text { get; set; }
