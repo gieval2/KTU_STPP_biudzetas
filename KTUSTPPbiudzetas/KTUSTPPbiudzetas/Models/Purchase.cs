@@ -10,8 +10,11 @@ namespace KTUSTPPBiudzetas.Models
 {
     public class Purchase : Entity
     {
+        [Required]
         public string Name { get; set; }
+        [Required]
         public double Amount { get; set; }
+        [Required]
         public double Price { get; set; }
         public int? CheckId { get; set; }
         [NotMapped]
