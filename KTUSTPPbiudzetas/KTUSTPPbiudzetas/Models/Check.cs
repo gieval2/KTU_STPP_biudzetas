@@ -11,6 +11,8 @@ namespace KTUSTPPBiudzetas.Models
     public class Check : Entity
     {
         [Required]
+        [DataType(DataType.DateTime)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime Date { get; set; }
 
         public ICollection<Purchase> Purchases { get; set; }
