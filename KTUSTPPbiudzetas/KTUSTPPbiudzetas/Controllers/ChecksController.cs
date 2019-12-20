@@ -121,9 +121,17 @@ namespace KTUSTPPBiudzetas.Controllers
 
         // GET: Checks/Delete/5
         [HttpGet("Budget/Checks/Delete/{id}")]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            return View();
+            using (var httpClient = new HttpClient())
+            {
+                using (var response = await httpClient.GetAsync("https://localhost:44330/Budget/Checks/" + id))
+                {
+                    var apiResponse = await response.Content.ReadAsAsync<Check>();
+                    //return View("~/Views/Checks/Edit.cshtml", apiResponse);
+                    return View(apiResponse);
+                }
+            }
         }
 
         // POST: Checks/Delete/5
